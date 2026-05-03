@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Secret Mission 💜</title>
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Segoe UI', sans-serif;
+        background: radial-gradient(circle at top, #1a1a2e, #0f172a);
+        color: #e5e7eb;
+    }
+
+    .app {
+        width: 360px;
+        height: 580px;
+        background: #0b1120;
+        border-radius: 20px;
+        box-shadow: 0 0 25px rgba(168,85,247,0.5);
+        padding: 20px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid #a855f7;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    h1 {
+        font-size: 20px;
+        color: #c084fc;
+    }
+
+    p {
+        font-size: 14px;
+        opacity: 0.8;
+    }
+
+    input {
+        padding: 10px;
+        width: 80%;
+        border-radius: 10px;
+        border: none;
+        background: #111827;
+        color: white;
+        text-align: center;
+        margin-top: 10px;
+        border: 1px solid #a855f7;
+    }
+
+    button {
+        padding: 12px 22px;
+        border: none;
+        border-radius: 12px;
+        margin-top: 15px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.2s;
+    }
+
+    button:hover {
+        transform: scale(1.05);
+    }
+
+    .yes {
+        background: #a855f7;
+        color: white;
+        box-shadow: 0 0 10px #a855f7;
+        position: relative;
+    }
+
+    /* 💜 FIXED BUTTON PLACEMENT START */
+/* BUTTON AREA FIXED */
+.btnBox {
+    position: relative;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+/* YES = normal button */
+.yes {
+    background: #a855f7;
+    color: white;
+    box-shadow: 0 0 10px #a855f7;
+    position: relative;
+}
+
+/* NO = starts normal (IMPORTANT FIX) */
+.no {
+    background: #f43f5e;
+    color: white;
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    transition: 0.2s;
+}
+    /* 💜 FIXED BUTTON PLACEMENT END */
+
+    .screen {
+        display: none;
+    }
+
+    .active {
+        display: block;
+        animation: fade 0.4s ease;
+    }
+
+    @keyframes fade {
+        from {opacity: 0; transform: translateY(10px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+
+    .tag {
+        font-size: 12px;
+        color: #94a3b8;
+        margin-bottom: 10px;
+    }
+
+    .cat {
+        width: 180px;
+        margin-top: 10px;
+        border-radius: 18px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SCREEN 1 -->
+    <div class="screen active" id="screen1">
+        <div class="tag">MISSION: CONFIDENTIAL 💜</div>
+        <h1>Enter your codename 🎯</h1>
+
+        <img class="cat" src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif">
+
+        <input type="text" id="nameInput" placeholder="Agent name">
+        <br>
+        <button class="yes" onclick="start()">Start Mission</button>
+    </div>
+
+    <!-- SCREEN 2 -->
+    <div class="screen" id="screen2">
+        <div class="tag">MISSION BRIEF</div>
+        <h1 id="questionText"></h1>
+
+        <p>Be honest. No escaping 😏</p>
+
+        <img class="cat" id="cat2"
+        src="https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif">
+
+        <div class="btnBox">
+            <button class="yes" onclick="yesAnswer()">Yes 💜</button>
+            <button class="no" id="noBtn" onclick="moveNo()">No 😝</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 3 -->
+    <div class="screen" id="screen3">
+        <div class="tag">SYSTEM LOG</div>
+        <h1 id="resultText"></h1>
+
+        <img class="cat" id="cat3">
+    </div>
+
+</div>
+
+<script>
+    let name = "";
+
+    function start() {
+        name = document.getElementById("nameInput").value;
+
+        if (name.trim() === "") {
+            alert("Enter your codename 😤");
+            return;
+        }
+
+        document.getElementById("questionText").innerText =
+            name + ", crush mo ba ako? 😳";
+
+        switchScreen("screen1", "screen2");
+    }
+
+    function switchScreen(a,b){
+        document.getElementById(a).classList.remove("active");
+        document.getElementById(b).classList.add("active");
+    }
+
+    function moveNo() {
+        const btn = document.getElementById("noBtn");
+
+        let x = Math.random() * 140;
+        let y = Math.random() * 40;
+
+        btn.style.left = x + "px";
+        btn.style.top = y + "px";
+
+        document.getElementById("cat2").src =
+        "https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif";
+    }
+
+    function yesAnswer() {
+        const text = document.getElementById("resultText");
+
+        switchScreen("screen2", "screen3");
+
+        text.innerText = "ACCESSING SYSTEM... 💜";
+
+        document.getElementById("cat3").src =
+        "https://media.giphy.com/media/Nm8ZPAGOwZUQM/giphy.gif";
+
+        setTimeout(() => {
+            text.innerText = "Response detected: YES 😳";
+
+            document.getElementById("cat3").src =
+            "https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif";
+        }, 1500);
+
+        setTimeout(() => {
+            text.innerText = "Unexpected result: HEART OVERRIDE 💜";
+
+            document.getElementById("cat3").src =
+            "https://media.giphy.com/media/13borq7Zo2kulO/giphy.gif";
+        }, 3500);
+
+        setTimeout(() => {
+            text.innerText =
+            "\ btw,Goodluck sa mga gagawin mo \nGoodnight boss! Sleepwell. thanks sa pag try. heart ka sa'kin mwhehehe";
+
+            document.getElementById("cat3").src =
+            "https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif";
+        }, 5500);
+    }
+</script>
+
+</body>
+</html>
